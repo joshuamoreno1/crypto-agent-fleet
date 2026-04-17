@@ -150,7 +150,7 @@ Top lesson: "[most important learning]"
 
 - Archive trade journals older than 30 days to `data/memory/trade-journal/archive/`
 - Consolidate duplicate lessons in `lessons.md`
-- Remove market patterns with confidence "Baja" older than 30 days
+- Remove market patterns with confidence "Low" older than 30 days
 
 ## Emergency Triggers
 

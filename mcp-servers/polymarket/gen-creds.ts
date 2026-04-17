@@ -2,8 +2,8 @@
 /**
  * gen-polymarket-creds.ts
  *
- * Genera las API credentials de Polymarket (key, secret, passphrase)
- * usando el keystore encriptado de la wallet — no pide la private key en texto plano.
+ * Generates Polymarket API credentials (key, secret, passphrase)
+ * using the encrypted wallet keystore — does not require the private key in plaintext.
  *
  * Uso:
  *   read -s "SIGNER_PASSWORD?🔑 Signer password: " && export SIGNER_PASSWORD
@@ -30,8 +30,8 @@ function decryptPrivateKey(): `0x${string}` {
   const password = process.env.SIGNER_PASSWORD;
 
   if (!password) {
-    console.error("❌ SIGNER_PASSWORD no está seteada.");
-    console.error("   Ejecuta: read -s \"SIGNER_PASSWORD?🔑 Signer password: \" && export SIGNER_PASSWORD");
+    console.error("❌ SIGNER_PASSWORD is not set.");
+    console.error("   Run: read -s \"SIGNER_PASSWORD?🔑 Signer password: \" && export SIGNER_PASSWORD");
     process.exit(1);
   }
 
@@ -42,13 +42,13 @@ function decryptPrivateKey(): `0x${string}` {
     ).trim();
     return `0x${result}` as `0x${string}`;
   } catch {
-    console.error("❌ No se pudo desencriptar el keystore. Password incorrecta?");
+    console.error("❌ Could not decrypt keystore. Wrong password?");
     process.exit(1);
   }
 }
 
 // --- Main ---
-console.log("\n🔑 Generando credenciales de Polymarket...\n");
+console.log("\n🔑 Generating Polymarket credentials...\n");
 
 const privateKey = decryptPrivateKey();
 
@@ -65,16 +65,16 @@ const walletClient = createWalletClient({ account, chain: polygon, transport: ht
 const client = new ClobClient("https://clob.polymarket.com", 137, walletClient);
 
 try {
-  // nonce=0 → derivación determinística (mismas creds cada vez)
+  // nonce=0 → deterministic derivation (same creds every time)
   const creds = await client.createApiKey(0);
 
-  console.log("\n✅ Credenciales generadas. Agrega esto a ~/.zshrc:\n");
+  console.log("\n✅ Credentials generated. Add this to ~/.zshrc:\n");
   console.log(`export POLYMARKET_API_KEY="${creds.key}"`);
   console.log(`export POLYMARKET_API_SECRET="${creds.secret}"`);
   console.log(`export POLYMARKET_PASSPHRASE="${creds.passphrase}"`);
-  console.log("\nDespués ejecuta: source ~/.zshrc\n");
+  console.log("\nThen run: source ~/.zshrc\n");
 } catch (e: any) {
   console.error(`\n❌ Error generando credentials: ${e.message}`);
-  console.error("   Posible causa: geobloqueo de Polymarket. Asegúrate de tener WARP activo.");
+  console.error("   Possible cause: Polymarket geo-block. Make sure WARP is active.");
   process.exit(1);
 }

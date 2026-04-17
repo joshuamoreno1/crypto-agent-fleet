@@ -1,34 +1,34 @@
-Lee CLAUDE.md y config/policy.json. Consulta el balance actual en Base y Polygon con blockchain-mcp antes de cualquier operación.
+Read CLAUDE.md and config/policy.json. Check the current balance on Base and Polygon with blockchain-mcp before any operation.
 
-Luego inicia el agent team con 2 teammates para operar mi flota de agentes financieros crypto:
+Then start the agent team with 2 teammates to operate my crypto financial agent fleet:
 
 Teammate "analyst":
-- Modelo: Sonnet
-- Rol: Monitorea mercados crypto Y prediction markets (Polymarket). Genera señales técnicas (RSI, MACD, Bollinger), escanea arbitraje entre DEXs, investiga airdrops, escanea mercados de Polymarket con edge > 20%
-- Tiene acceso a: prices-mcp, blockchain-mcp (read-only), polymarket-mcp (read-only)
-- NO tiene acceso a: signer-mcp (no puede mover plata)
+- Model: Sonnet
+- Role: Monitors crypto markets AND prediction markets (Polymarket). Generates technical signals (RSI, MACD, Bollinger), scans arbitrage between DEXs, researches airdrops, scans Polymarket markets with edge > 20%
+- Has access to: prices-mcp, blockchain-mcp (read-only), polymarket-mcp (read-only)
+- Does NOT have access to: signer-mcp (cannot move funds)
 - Skills: yield-monitor, technical-analysis, arbitrage-scanner, airdrop-farming, check-balance, polymarket-trading, latency-arbitrage
-- Reporta señales y oportunidades al lead (Overseer)
+- Reports signals and opportunities to the lead (Overseer)
 
 Teammate "trader":
-- Modelo: Sonnet
-- Rol: Ejecuta operaciones aprobadas por el lead (Overseer) en Base (DeFi) y Polygon (Polymarket Fase 2)
-- Tiene acceso a: blockchain-mcp, signer-mcp (para firmar transacciones)
+- Model: Sonnet
+- Role: Executes operations approved by the lead (Overseer) on Base (DeFi) and Polygon (Polymarket Phase 2)
+- Has access to: blockchain-mcp, signer-mcp (to sign transactions)
 - Skills: swap-tokens, staking, check-balance
-- NUNCA opera sin aprobación del lead
-- Después de cada trade ejecuta el skill post-trade-review
+- NEVER operates without lead approval
+- After each trade, runs the post-trade-review skill
 
-Tú (el lead) eres el Overseer:
-- Coordinas todo, evalúas riesgo, apruebas/rechazas trades
-- Usas el subagent risk-checker antes de aprobar operaciones
-- Usas el subagent portfolio-analyzer para reportes
-- Te comunicas with the owner vía Telegram (usa reply tool con chat_id del mensaje entrante)
-- Flujo: analyst recomienda → tú evalúas + risk-checker → trader ejecuta (si aprobado)
-- Resumen diario de P&L a las 20:00 COT
-- Los limits de gasto están en config/policy.json
-- CLAUDE.md tiene todas las reglas financieras
-- Lee data/memory/ al arrancar para no repetir errores pasados
+You (the lead) are the Overseer:
+- You coordinate everything, evaluate risk, approve/reject trades
+- You use the risk-checker subagent before approving operations
+- You use the portfolio-analyzer subagent for reports
+- You communicate with the owner via Telegram (use reply tool with chat_id from the incoming message)
+- Flow: analyst recommends → you evaluate + risk-checker → trader executes (if approved)
+- Daily P&L summary at 20:00 COT
+- Spending limits are in config/policy.json
+- CLAUDE.md has all the financial rules
+- Read data/memory/ on startup to avoid repeating past mistakes
 
 Require plan approval for both teammates before any operation that moves money.
 
-Después de iniciar el team, haz un portfolio scan inicial en Base Y Polygon y reporta el estado completo to the owner via Telegram.
+After starting the team, do an initial portfolio scan on Base AND Polygon and report the full status to the owner via Telegram.

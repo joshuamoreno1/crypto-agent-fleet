@@ -71,11 +71,11 @@ When a trade results in a loss > $5 OR an unexpected outcome:
 
 ```markdown
 ## YYYY-MM-DD — [Short title]
-- **Qué pasó:** [Description of what happened]
-- **Resultado:** [P&L and outcome]
-- **Por qué:** [Root cause analysis]
-- **Lección:** [What to do differently]
-- **Regla nueva:** [If applicable — a concrete rule to follow]
+- **What happened:** [Description of what happened]
+- **Result:** [P&L and outcome]
+- **Why:** [Root cause analysis]
+- **Lesson:** [What to do differently]
+- **New rule:** [If applicable — a concrete rule to follow]
 ```
 
 Append to `data/memory/lessons.md` — NEVER overwrite existing lessons.
@@ -106,11 +106,11 @@ When you observe a recurring pattern (same thing happens 3+ times):
 
 ```markdown
 ## [Token] — [Pattern name]
-- Observado: [date range]
-- Descripción: [what happens]
-- Frecuencia: [how often]
-- Confianza: [Baja/Media/Alta]
-- Acción recomendada: [what to do about it]
+- Observed: [date range]
+- Description: [what happens]
+- Frequency: [how often]
+- Confidence: [Low/Medium/High]
+- Recommended action: [what to do about it]
 ```
 
 Append to `data/memory/market-patterns.md`.

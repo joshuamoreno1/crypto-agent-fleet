@@ -96,25 +96,25 @@ A lesson MUST be written to `data/memory/lessons.md` if ANY of these are true:
 
 | Condition | Required? |
 |-----------|-----------|
-| Loss > $5 | ✅ Always |
-| Loss > 3% of position | ✅ Always |
-| Transaction reverted | ✅ Always |
-| Unexpected slippage > 2% | ✅ Always |
-| Win but wrong reasoning | ⚠️ Recommended |
-| First trade of a new strategy | ⚠️ Recommended |
+| Loss > $5 | Always |
+| Loss > 3% of position | Always |
+| Transaction reverted | Always |
+| Unexpected slippage > 2% | Always |
+| Win but wrong reasoning | Recommended |
+| First trade of a new strategy | Recommended |
 
 ### Lesson format:
 
 ```markdown
 ## YYYY-MM-DD — [Short descriptive title]
-- **Estrategia:** [strategy name]
-- **Qué pasó:** [1-2 sentences describing the trade]
-- **Resultado:** [P&L in $ and %]
-- **Señal original:** [what signal triggered this]
-- **Qué salió mal:** [root cause — be specific]
-- **Lección:** [what to do differently next time]
-- **Regla nueva:** [optional — a concrete rule to add to behavior]
-- **Stats al momento:** [win rate, total P&L of this strategy]
+- **Strategy:** [strategy name]
+- **What happened:** [1-2 sentences describing the trade]
+- **Result:** [P&L in $ and %]
+- **Original signal:** [what signal triggered this]
+- **What went wrong:** [root cause — be specific]
+- **Lesson:** [what to do differently next time]
+- **New rule:** [optional — a concrete rule to add to behavior]
+- **Stats at the time:** [win rate, total P&L of this strategy]
 ```
 
 ## Step 5: Check Adaptive Rules

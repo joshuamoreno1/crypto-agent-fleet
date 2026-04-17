@@ -6,48 +6,48 @@ model: opus
 
 # Latency Arbitrage — Polymarket
 
-## Concepto
-Polymarket actualiza precios más lento que feeds en tiempo real.
-Cuando BTC sube rápido pero Polymarket no lo refleja, hay oportunidad.
+## Concept
+Polymarket updates prices slower than real-time feeds.
+When BTC rises fast but Polymarket doesn't reflect it yet, there's an opportunity.
 
-## Cuándo usar
-- Heartbeat regular (scan de oportunidades)
-- owner asks "busca arbitraje en Polymarket"
-- Volatilidad alta en crypto (movimientos > 3% en 1h)
+## When to Use
+- Regular heartbeat (opportunity scan)
+- Owner asks to "find arbitrage on Polymarket"
+- High crypto volatility (moves > 3% in 1h)
 
-## Flujo de detección
-1. `prices.get_prices(["bitcoin", "ethereum"])` — precio spot actual
-2. `polymarket.list_markets(category="crypto", active=true)` — mercados crypto
-3. Para cada mercado tipo "Token above $X":
-   a. `polymarket.get_market_price(token_id)` — precio share (= prob implícita)
-   b. Calcular probabilidad real basada en precio spot vs threshold
-   c. gap = prob_real - prob_polymarket
-   d. Si gap > threshold configurado → OPORTUNIDAD
-4. `polymarket.get_order_book(token_id)` — verificar liquidez
-5. Si liquidez suficiente → reportar al Overseer
+## Detection Flow
+1. `prices.get_prices(["bitcoin", "ethereum"])` — current spot price
+2. `polymarket.list_markets(category="crypto", active=true)` — crypto markets
+3. For each market of type "Token above $X":
+   a. `polymarket.get_market_price(token_id)` — share price (= implied probability)
+   b. Calculate real probability based on spot price vs threshold
+   c. gap = real_prob - polymarket_prob
+   d. If gap > configured threshold → OPPORTUNITY
+4. `polymarket.get_order_book(token_id)` — verify liquidity
+5. If sufficient liquidity → report to Overseer
 
 ## Thresholds
-- Gap mínimo para reportar: 5%
-- Gap mínimo para recomendar trade: 10%
-- Liquidez mínima en order book: $500
-- Max posición: $5 USDC
+- Minimum gap to report: 5%
+- Minimum gap to recommend trade: 10%
+- Minimum order book liquidity: $500
+- Max position: $5 USDC
 
-## Riesgos
-- Fees de taker (~1-2%) reducen el edge
-- Slippage en mercados poco líquidos
+## Risks
+- Taker fees (~1-2%) reduce the edge
+- Slippage in illiquid markets
 - Polymarket anti-arbitrage measures
-- Con capital < $200, el profit post-fees es marginal
-- Edge se reduce con el tiempo (más bots en Polymarket)
+- With capital < $200, post-fee profit is marginal
+- Edge decreases over time (more bots on Polymarket)
 
-## Viabilidad por capital
-- $50: Solo monitoreo + trades muy selectivos (gap > 15%)
-- $200: Viable con disciplina (gap > 8%)
-- $500+: Rentable consistentemente (gap > 5%)
+## Viability by Capital
+- $50: Monitoring only + very selective trades (gap > 15%)
+- $200: Viable with discipline (gap > 8%)
+- $500+: Consistently profitable (gap > 5%)
 
-## Reglas
-- SIEMPRE verificar liquidez del order book antes de recomendar
-- SIEMPRE calcular profit DESPUÉS de fees (taker ~1-2%)
-- Market orders (FOK) para ejecución inmediata
-- Máximo 3 posiciones de arbitraje simultáneas
-- Stop-loss: si price se mueve 5% en contra, cerrar
-- Registrar en data/memory/trade-journal/
+## Rules
+- ALWAYS verify order book liquidity before recommending
+- ALWAYS calculate profit AFTER fees (taker ~1-2%)
+- Market orders (FOK) for immediate execution
+- Maximum 3 simultaneous arbitrage positions
+- Stop-loss: if price moves 5% against you, close
+- Log in data/memory/trade-journal/

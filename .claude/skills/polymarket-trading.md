@@ -6,55 +6,55 @@ model: opus
 
 # Polymarket Trading
 
-## Qué es Polymarket
-Mercado de predicciones en Polygon (chain 137). Compras shares de "Sí" o "No" en eventos.
-Share ganadora paga $1.00, perdedora $0.00. El precio = probabilidad implícita.
+## What is Polymarket
+A prediction market on Polygon (chain 137). You buy shares of "Yes" or "No" on events.
+Winning shares pay $1.00, losing shares pay $0.00. The price = implied probability.
 
-## Cuándo usar este skill
-- owner asks analizar un mercado de predicción
-- Heartbeat detecta oportunidad en Polymarket
-- Analyst identifica mercado con edge > 20%
+## When to Use This Skill
+- Owner asks to analyze a prediction market
+- Heartbeat detects an opportunity on Polymarket
+- Analyst identifies a market with edge > 20%
 
-## Flujo de evaluación
-1. `polymarket.list_markets(category="crypto", active=true)` — buscar mercados
-2. Para cada mercado interesante:
-   a. `polymarket.get_market_price(token_id)` — precio actual
-   b. `prices.get_prices(token)` — precio real del activo subyacente
-   c. `prices.get_price_history(token, days=30)` — tendencia
-   d. Calcular probabilidad real usando technical-analysis
-   e. Calcular edge = probabilidad_real - precio_polymarket
-3. Si edge > 20% → reportar al Overseer con recomendación
+## Evaluation Flow
+1. `polymarket.list_markets(category="crypto", active=true)` — find markets
+2. For each interesting market:
+   a. `polymarket.get_market_price(token_id)` — current price
+   b. `prices.get_prices(token)` — real price of the underlying asset
+   c. `prices.get_price_history(token, days=30)` — trend
+   d. Calculate real probability using technical-analysis
+   e. Calculate edge = real_probability - polymarket_price
+3. If edge > 20% → report to Overseer with recommendation
 
-## Cálculo de probabilidad para mercados tipo "Token above $X by Date"
-- Precio actual > threshold + 10%: prob 80-95%
-- Precio actual > threshold: prob 55-80%
-- Precio actual cerca (±5%): prob 40-60%
-- Precio actual < threshold: prob 20-45%
-- Precio actual < threshold - 10%: prob 5-20%
+## Probability Calculation for "Token above $X by Date" Markets
+- Current price > threshold + 10%: prob 80-95%
+- Current price > threshold: prob 55-80%
+- Current price close (±5%): prob 40-60%
+- Current price < threshold: prob 20-45%
+- Current price < threshold - 10%: prob 5-20%
 
-Ajustar por:
-- Tendencia (+10% uptrend, -10% downtrend)
-- Tiempo restante (más tiempo = más hacia 50%)
-- Volatilidad (más vol = más hacia 50%)
-- Eventos catalíticos
+Adjust for:
+- Trend (+10% uptrend, -10% downtrend)
+- Time remaining (more time = closer to 50%)
+- Volatility (more vol = closer to 50%)
+- Catalytic events
 
 ## Position Sizing (Half-Kelly)
 - Kelly fraction = (edge / odds)
-- Half-Kelly = Kelly / 2 (más conservador)
-- Máximo por posición: $5 USDC
-- Máximo total en Polymarket: $20 USDC
-- Máximo posiciones simultáneas: 4
+- Half-Kelly = Kelly / 2 (more conservative)
+- Max per position: $5 USDC
+- Max total on Polymarket: $20 USDC
+- Max concurrent positions: 4
 
-## Reglas
-- SIEMPRE pedir owner approval antes de comprar shares
-- SIEMPRE usar limit orders (excepto event-driven urgente)
-- Edge mínimo: 20%
-- Categorías permitidas: crypto, tech
-- Liquidez mínima del mercado: $1,000
-- Registrar TODO en data/memory/trade-journal/
+## Rules
+- ALWAYS request owner approval before buying shares
+- ALWAYS use limit orders (except for urgent event-driven trades)
+- Minimum edge: 20%
+- Allowed categories: crypto, tech
+- Minimum market liquidity: $1,000
+- Log EVERYTHING in data/memory/trade-journal/
 
-## Monitoreo de posiciones
-- Revisar posiciones cada 24h
-- Re-evaluar probabilidades
-- Si mercado cierra en < 48h → alert owner
-- Si probabilidad cambió significativamente → reportar
+## Position Monitoring
+- Review positions every 24h
+- Re-evaluate probabilities
+- If market closes in < 48h → alert owner
+- If probability changed significantly → report

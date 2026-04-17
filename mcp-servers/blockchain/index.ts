@@ -24,7 +24,7 @@ const polygonClient = createPublicClient({
   transport: http("https://polygon-bor-rpc.publicnode.com"),
 });
 
-// --- ERC20 ABI (mínimo para balanceOf y decimals) ---
+// --- ERC20 ABI (minimal for balanceOf and decimals) ---
 const erc20Abi = [
   {
     inputs: [{ name: "account", type: "address" }],

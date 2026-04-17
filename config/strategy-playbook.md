@@ -1,156 +1,156 @@
-# Strategy Playbook — Cuándo usar cada estrategia
+# Strategy Playbook — When to use each strategy
 
-> **OBLIGATORIO**: Todos los agentes DEBEN leer este archivo al arrancar.
-> El Overseer lo usa para decidir allocation. El Analyst para priorizar señales. El Trader para validar antes de ejecutar.
-
----
-
-## 🏦 1. Yield Farming — El "CDT crypto"
-
-**Qué es:** Depositar USDC en protocolos de lending (Aave, Compound) para ganar interés pasivo.
-
-**Cuándo usarla:**
-- **Siempre** — es la base estable del portfolio (target 40%)
-- Cuando APY > 2% (por debajo no justifica el riesgo con montos pequeños)
-- Como primera estrategia al arrancar
-
-**Retorno esperado:** ~$0.27/mes con $80 al 4% APY. Bajo pero seguro.
+> **MANDATORY**: All agents MUST read this file on startup.
+> The Overseer uses it to decide allocation. The Analyst to prioritize signals. The Trader to validate before executing.
 
 ---
 
-## 📊 2. Technical Trading — Compra/venta por señales técnicas
+## 🏦 1. Yield Farming — The "crypto savings account"
 
-**Qué es:** El Analyst calcula RSI, MACD, Bollinger Bands y genera señales. Si hay confluencia ≥ 3/5 indicadores, recomienda trade.
+**What it is:** Deposit USDC into lending protocols (Aave, Compound) to earn passive interest.
 
-**Cuándo usarla:**
-- Solo cuando hay señal fuerte (3+ indicadores alineados)
-- Solo después de backtesting con Sharpe > 1.0
-- **Nunca sin stop loss definido**
+**When to use it:**
+- **Always** — it's the stable base of the portfolio (target 40%)
+- When APY > 2% (below that it doesn't justify the risk with small amounts)
+- As the first strategy to deploy on launch
 
-**Sizing:** 5-10% del portfolio por trade. Max 30% total en trading activo.
-
-**Regla de sobreventa (aprobada 2026-03-30):**
-- Si RSI < 30 → compra automática de $5 en ETH sin esperar confluencia completa
-- Stop loss obligatorio: 5% (máx pérdida ~$0.25 por trade)
-- Confluencia mínima bajada a 2/5 (antes 3/5) para trades normales
-- Si win rate < 40% después de 10 trades → revertir a 3/5
-
-**Retorno esperado:** ~$2-5/mes si las señales son buenas.
+**Expected return:** ~$0.27/month with $80 at 4% APY. Low but safe.
 
 ---
 
-## ⚡ 3. Arbitrage — Comprar barato en un DEX, vender caro en otro
+## 📊 2. Technical Trading — Buy/sell based on technical signals
 
-**Qué es:** Scanner compara precios entre Uniswap, Aerodrome, Curve cada 15 min.
+**What it is:** The Analyst calculates RSI, MACD, Bollinger Bands and generates signals. If confluence >= 3/5 indicators, it recommends a trade.
 
-**Cuándo usarla:**
-- Cuando el spread post-gas > 0.3%
-- En stablecoin depegs temporales (DAI/USDC)
-- En pools nuevos donde los precios aún no están equilibrados
-- Auto-aprobado si monto < $50
+**When to use it:**
+- Only when there's a strong signal (3+ indicators aligned)
+- Only after backtesting with Sharpe > 1.0
+- **Never without a defined stop loss**
 
-**Expectativa real:** $0-3/mes. Es oportunista — el costo de escanear es cero, así que cualquier captura es ganancia.
+**Sizing:** 5-10% of portfolio per trade. Max 30% total in active trading.
 
-> ⚠️ **No compites con MEV bots.** Enfócate en pares con menos competencia en Base.
+**Oversold rule (approved 2026-03-30):**
+- If RSI < 30 → auto-buy $5 in ETH without waiting for full confluence
+- Mandatory stop loss: 5% (max loss ~$0.25 per trade)
+- Minimum confluence lowered to 2/5 (previously 3/5) for normal trades
+- If win rate < 40% after 10 trades → revert to 3/5
 
----
-
-## 🎯 4. Airdrop Farming — Especulación con interacciones tempranas
-
-**Qué es:** Interactuar semanalmente con protocolos sin token para calificar para futuros airdrops.
-
-**Cuándo usarla:**
-- Cuando el Analyst identifica protocolos con: VC tier 1, TVL > $10M, 3+ meses live, auditados, sin token
-- Máximo 10% del portfolio ($20)
-- Cadencia semanal: swap + deposit + vote para parecer usuario real (no bot)
-
-**Retorno esperado:** $0 hasta que haya airdrop. Si llega, históricamente han sido $800-1,500+. Es lotería educada.
+**Expected return:** ~$2-5/month if signals are good.
 
 ---
 
-## 🔒 5. Staking & Liquid Staking — cbETH pasivo
+## ⚡ 3. Arbitrage — Buy cheap on one DEX, sell expensive on another
 
-**Qué es:** Comprar cbETH (ETH stakeado de Coinbase). Se aprecia ~3.5% APY automáticamente.
+**What it is:** Scanner compares prices between Uniswap, Aerodrome, Curve every 15 min.
 
-**Cuándo usarla:**
-- Como posición pasiva de largo plazo (target 10%, max 30%)
-- **Jugada simple:** Buy and hold cbETH
-- **Jugada compuesta:** cbETH → Aave para doble yield (~5.1% APY)
+**When to use it:**
+- When spread post-gas > 0.3%
+- During temporary stablecoin depegs (DAI/USDC)
+- In new pools where prices haven't yet equilibrated
+- Auto-approved if amount < $50
 
-**Retorno esperado:** ~$0.08/mes con $20 al 5%. Mínimo pero cero mantenimiento.
+**Realistic expectation:** $0-3/month. It's opportunistic — scanning costs zero, so any capture is profit.
+
+> ⚠️ **You can't compete with MEV bots.** Focus on pairs with less competition on Base.
 
 ---
 
-## 📈 7. Perpetual Trading — Forex, Commodities, Stocks & Crypto con leverage
+## 🎯 4. Airdrop Farming — Speculating with early interactions
 
-**Qué es:** Abrir posiciones LONG o SHORT con leverage en gTrade (Gains Network) sobre Base.
-En vez de comprar el activo, "apostás" a que sube (long) o baja (short) con un multiplicador.
-Si ponés $5 con 10x leverage, es como si tuvieras $50 de exposición.
+**What it is:** Interact weekly with pre-token protocols to qualify for future airdrops.
 
-**Protocolo:** gTrade (Gains Network) — Diamond en Base: `0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb`
-**Colateral:** USDC
+**When to use it:**
+- When the Analyst identifies protocols with: tier-1 VC backing, TVL > $10M, 3+ months live, audited, no token
+- Max 10% of portfolio ($20)
+- Weekly cadence: swap + deposit + vote to look like a real user (not a bot)
 
-**Pares disponibles:**
+**Expected return:** $0 until airdrop happens. Historically, airdrops have been $800-1,500+. It's an educated lottery.
+
+---
+
+## 🔒 5. Staking & Liquid Staking — Passive cbETH
+
+**What it is:** Buy cbETH (Coinbase-staked ETH). It appreciates ~3.5% APY automatically.
+
+**When to use it:**
+- As a passive long-term position (target 10%, max 30%)
+- **Simple play:** Buy and hold cbETH
+- **Compounding play:** cbETH → Aave for double yield (~5.1% APY)
+
+**Expected return:** ~$0.08/month with $20 at 5%. Minimal but zero maintenance.
+
+---
+
+## 📈 7. Perpetual Trading — Forex, Commodities, Stocks & Crypto with leverage
+
+**What it is:** Open LONG or SHORT positions with leverage on gTrade (Gains Network) on Base.
+Instead of buying the asset, you "bet" that it goes up (long) or down (short) with a multiplier.
+If you put $5 with 10x leverage, it's as if you had $50 of exposure.
+
+**Protocol:** gTrade (Gains Network) — Diamond on Base: `0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb`
+**Collateral:** USDC
+
+**Available pairs:**
 - **Forex:** EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, NZD/USD, USD/CAD, EUR/GBP, EUR/JPY
-- **Commodities:** Oro (XAU/USD), Plata (XAG/USD)
+- **Commodities:** Gold (XAU/USD), Silver (XAG/USD)
 - **Stocks:** AAPL, TSLA, NVDA, GOOGL, AMZN, META, MSFT
-- **Índices:** SPX500 (S&P 500)
-- **Crypto:** BTC, ETH, SOL, LINK, DOGE y 40+ más
+- **Indices:** SPX500 (S&P 500)
+- **Crypto:** BTC, ETH, SOL, LINK, DOGE and 40+ more
 
-**Cuándo usarla:**
+**When to use it:**
 
-| Escenario | Acción | Pair sugerido |
+| Scenario | Action | Suggested pair |
 |---|---|---|
-| USD débil (BTC+oro subiendo) | LONG EUR/USD, LONG XAU/USD | 21, 90 |
-| USD fuerte (DXY subiendo) | SHORT EUR/USD | 21 |
-| Earnings de tech fuertes | LONG NVDA o TSLA post-report | 65, 63 |
-| Crisis geopolítica / incertidumbre | LONG XAU/USD (oro = refugio) | 90 |
-| ETH oversold (RSI < 30) | LONG ETH/USD con leverage en vez de spot | 1 |
-| Trend claro en forex (4h+ timeframe) | Seguir tendencia con 10-25x | 21-30 |
-| Mercado lateral sin tendencia | NO operar perps — el funding te come | — |
+| Weak USD (BTC + gold rising) | LONG EUR/USD, LONG XAU/USD | 21, 90 |
+| Strong USD (DXY rising) | SHORT EUR/USD | 21 |
+| Strong tech earnings | LONG NVDA or TSLA post-report | 65, 63 |
+| Geopolitical crisis / uncertainty | LONG XAU/USD (gold = safe haven) | 90 |
+| ETH oversold (RSI < 30) | LONG ETH/USD with leverage instead of spot | 1 |
+| Clear forex trend (4h+ timeframe) | Follow the trend with 10-25x | 21-30 |
+| Sideways market with no trend | DO NOT trade perps — funding eats into returns | — |
 
-**Sizing y límites:**
-- Max colateral por posición: $5 USDC
-- Max total en perps: $20 USDC de colateral
-- Max posiciones simultáneas: 4
-- Leverage max por grupo: crypto 10x, forex 25x, commodities 10x, stocks 5x
-- **SIEMPRE con stop loss** — max 5% de distancia al precio de entrada
-- Max pérdida por trade: ~$2.50 (con SL al 5% y $5 colateral a 10x)
+**Sizing and limits:**
+- Max collateral per position: $5 USDC
+- Max total in perps: $20 USDC collateral
+- Max concurrent positions: 4
+- Max leverage by group: crypto 10x, forex 25x, commodities 10x, stocks 5x
+- **ALWAYS with stop loss** — max 5% distance from entry price
+- Max loss per trade: ~$2.50 (with SL at 5% and $5 collateral at 10x)
 
-**Fees (super baratos en gTrade):**
-- Forex: ~0.008% por apertura/cierre (prácticamente gratis)
+**Fees (very cheap on gTrade):**
+- Forex: ~0.008% per open/close (practically free)
 - Crypto: ~0.08%
 - Commodities: ~0.04%
 - Stocks: ~0.08%
 
-**Retorno esperado:** $5-15/mes con buen análisis técnico + macro. Alto riesgo, alto reward.
-Un trade de forex a 10x que se mueva 0.5% a tu favor = 5% de ganancia sobre colateral.
+**Expected return:** $5-15/month with good technical + macro analysis. High risk, high reward.
+A forex trade at 10x that moves 0.5% in your favor = 5% profit on collateral.
 
-**⚠️ Riesgos específicos:**
-- Con leverage, las pérdidas también se multiplican. 10x leverage + 10% en contra = pierdes todo.
-- Forex cierra fines de semana — puede haber gap el lunes.
-- Stocks solo se mueven en market hours (9:30-16:00 ET) pero gTrade permite operar 24/7.
-- Funding fees se acumulan con el tiempo — no dejar posiciones abiertas por días sin razón.
+**⚠️ Specific risks:**
+- With leverage, losses are also multiplied. 10x leverage + 10% against you = total loss.
+- Forex closes on weekends — there can be a gap on Monday.
+- Stocks only move during market hours (9:30-16:00 ET) but gTrade allows 24/7 trading.
+- Funding fees accumulate over time — don't leave positions open for days without reason.
 
-**Regla adaptativa:**
-- Si win rate < 40% después de 10 trades de perps → bajar leverage a 3x max
-- Si pérdida acumulada en perps > $10 → PAUSAR perpetuals, alert owner
+**Adaptive rule:**
+- If win rate < 40% after 10 perp trades → lower leverage to 3x max
+- If cumulative loss in perps > $10 → PAUSE perpetuals, alert owner
 
 ---
 
-## 🎛️ 6. Portfolio Management — La meta-estrategia
+## 🎛️ 6. Portfolio Management — The meta-strategy
 
-**Qué es:** El Overseer gestiona la asignación entre TODAS las estrategias. Rebalancea semanalmente.
+**What it is:** The Overseer manages allocation across ALL strategies. Rebalances weekly.
 
-**Cuándo actúa:**
-- Si una estrategia se desvía > 10% del target → rebalancear
-- Si USDC reserve < 5% → retirar de yield para reponer
-- Daily P&L report a las 20:00 COT
-- Weekly review los domingos
+**When it acts:**
+- If a strategy deviates > 10% from target → rebalance
+- If USDC reserve < 5% → withdraw from yield to replenish
+- Daily P&L report at 20:00 COT
+- Weekly review on Sundays
 
 **Target allocation:**
 
-| Estrategia | Target |
+| Strategy | Target |
 |---|---|
 | Trading (spot) | 40% |
 | Perpetuals (gTrade) | 20% |
@@ -162,16 +162,16 @@ Un trade de forex a 10x que se mueva 0.5% a tu favor = 5% de ganancia sobre cola
 
 ---
 
-## 💡 TL;DR — Cuál usar y cuándo
+## 💡 TL;DR — Which to use and when
 
-| Situación | Estrategia |
+| Situation | Strategy |
 |---|---|
-| "Quiero ganar algo seguro sin hacer nada" | **Yield Farming** |
-| "ETH parece que va a subir/bajar" | **Technical Trading** (spot) o **Perpetuals** (con leverage) |
-| "El dólar está débil / fuerte" | **Perpetuals** — EUR/USD, GBP/USD |
-| "Hay crisis / incertidumbre" | **Perpetuals** — LONG XAU/USD (oro) |
-| "Las acciones tech van a subir post-earnings" | **Perpetuals** — LONG NVDA, TSLA |
-| "Hay diferencia de precio entre DEXs" | **Arbitrage** |
-| "Este protocolo nuevo pinta bien y no tiene token" | **Airdrop Farming** |
-| "Quiero apostar a un resultado binario" | **Polymarket** (prediction markets) |
-| "¿Mi portfolio está balanceado?" | **Portfolio Management** |
+| "I want safe passive returns" | **Yield Farming** |
+| "ETH looks like it's going up/down" | **Technical Trading** (spot) or **Perpetuals** (with leverage) |
+| "The dollar is weak / strong" | **Perpetuals** — EUR/USD, GBP/USD |
+| "There's a crisis / uncertainty" | **Perpetuals** — LONG XAU/USD (gold) |
+| "Tech stocks will rise post-earnings" | **Perpetuals** — LONG NVDA, TSLA |
+| "There's a price difference between DEXs" | **Arbitrage** |
+| "This new protocol looks good and has no token" | **Airdrop Farming** |
+| "I want to bet on a binary outcome" | **Polymarket** (prediction markets) |
+| "Is my portfolio balanced?" | **Portfolio Management** |

@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-# Desinstala el heartbeat de Money Agents
-
-PLIST="$HOME/Library/LaunchAgents/com.example.money-agents-heartbeat.plist"
-
-launchctl unload "$PLIST" 2>/dev/null
-
-echo "✅ Heartbeat desinstalado."
-echo "Verificar: launchctl list | grep money-agents"

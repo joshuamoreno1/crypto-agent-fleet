@@ -1,23 +1,21 @@
-# Secrets - NUNCA commitear
+# Secrets — never commit
 keystore/*.key
 keystore/*.key.enc
 .env
 .env.*
-config/telegram-bots.json
-scripts/*.sh
 
-# Data (generada por agentes)
+# Agent-generated data
 data/audit-log/
 data/market-data/
 data/pending-txs/
 data/memory/trade-journal/
 
-# Keep memory templates (but journal entries are generated)
+# Keep memory templates (journal entries are generated)
 !data/memory/lessons.md
 !data/memory/market-patterns.md
 !data/memory/strategy-stats.json
 
-# Node modules de MCP servers
+# Node modules
 mcp-servers/*/node_modules/
 node_modules/
 
@@ -29,4 +27,3 @@ node_modules/
 !data/market-data/.gitkeep
 !data/pending-txs/.gitkeep
 !keystore/.gitkeep
-scripts/.init-prompt.txt

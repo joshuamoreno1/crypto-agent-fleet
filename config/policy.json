@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-03-28",
-  "note": "Limits conservadores. Consultar balance actual v\u00eda blockchain-mcp antes de operar.",
+  "note": "Conservative limits. Check current balance via blockchain-mcp before operating.",
   "spending_limits": {
     "per_transaction_usd": 40,
     "daily_usd": 100,
@@ -81,7 +81,7 @@
         "get_positions"
       ],
       "phase": 2,
-      "notes": "Fase 2: trading habilitado. L\u00edmites en prediction_market_limits."
+      "notes": "Phase 2: trading enabled. Limits defined in prediction_market_limits."
     },
     {
       "name": "USDC (Base)",
@@ -220,12 +220,12 @@
     "yield_farming": {
       "target_pct": 0,
       "max_pct": 10,
-      "note": "Desactivado por owner — prefiere trading activo"
+      "note": "Disabled by owner — prefers active trading"
     },
     "trading": {
       "target_pct": 60,
       "max_pct": 80,
-      "note": "Incluye ETH, BTC, AERO, VIRTUAL, memecoins"
+      "note": "Includes ETH, BTC, AERO, VIRTUAL, memecoins"
     },
     "arbitrage": {
       "target_pct": 5,
@@ -238,7 +238,7 @@
     "staking": {
       "target_pct": 0,
       "max_pct": 10,
-      "note": "Desactivado por owner"
+      "note": "Disabled by owner"
     },
     "reserve_usdc": {
       "target_pct": 10,
@@ -251,7 +251,7 @@
     "perpetuals": {
       "target_pct": 20,
       "max_pct": 35,
-      "note": "gTrade perpetuals: forex, commodities, stocks, crypto. Agregado 2026-04-14."
+      "note": "gTrade perpetuals: forex, commodities, stocks, crypto. Added 2026-04-14."
     }
   },
   "adaptive_rules": {
@@ -273,12 +273,12 @@
       "rsi_threshold": 30,
       "position_size_usd": 5,
       "stop_loss_pct": 5,
-      "note": "Compra automática cuando RSI < 30. Approved by owner."
+      "note": "Auto-buy when RSI < 30. Approved by owner."
     },
     "revert_to_conservative_if": {
       "win_rate_below": 0.4,
       "after_n_trades": 10,
-      "note": "Si win rate < 40% después de 10 trades, volver a confluencia 3/5"
+      "note": "If win rate < 40% after 10 trades, revert to confluence 3/5"
     }
   },
   "prediction_market_limits": {
@@ -297,7 +297,7 @@
       "entertainment",
       "economics"
     ],
-    "category_notes": "Ampliado por owner (2026-03-31). Todas las categorías permitidas.",
+    "category_notes": "Expanded by owner (2026-03-31). All categories allowed.",
     "require_approval": true,
     "sizing_method": "half_kelly"
   },
@@ -317,7 +317,7 @@
     "diamond_address": "0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb",
     "collateral": "USDC",
     "collateral_index": 1,
-    "notes": "Perpetuals en Base via gTrade. SIEMPRE usar stop loss. Leverage conservador para empezar — se puede subir con aprobación."
+    "notes": "Perpetuals on Base via gTrade. ALWAYS use stop loss. Conservative leverage to start — can be increased with approval."
   },
   "bridge_operations": {
     "enabled": false,
@@ -338,6 +338,6 @@
     ],
     "max_bridge_amount_usd": 25,
     "require_approval": true,
-    "notes": "Bridge deshabilitado por defecto. Habilitar manualmente cuando sea necesario."
+    "notes": "Bridge disabled by default. Enable manually when needed."
   }
 }

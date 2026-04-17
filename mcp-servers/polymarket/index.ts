@@ -365,7 +365,7 @@ server.tool(
   }
 );
 
-// --- Trading Tools (Fase 2) ---
+// --- Trading Tools (Phase 2) ---
 
 server.tool(
   "place_order",

@@ -6,16 +6,16 @@ model: sonnet
 
 # Swap Tokens
 
-## ⚠️ REGLA CRÍTICA: Usar MCP tools, NO scripts
+## CRITICAL RULE: Use MCP tools, NOT scripts
 
-**NUNCA crear scripts Node/Python/bash para ejecutar swaps.**
-Usa EXCLUSIVAMENTE las MCP tools disponibles:
-- `blockchain.*` para leer datos on-chain
-- `prices.*` para obtener precios
-- `signer.check_policy` para validar contra policy
-- `signer.sign_and_send` para firmar y enviar transacciones
+**NEVER create Node/Python/bash scripts to execute swaps.**
+Use EXCLUSIVELY the available MCP tools:
+- `blockchain.*` to read on-chain data
+- `prices.*` to get prices
+- `signer.check_policy` to validate against policy
+- `signer.sign_and_send` to sign and send transactions
 
-El signer MCP acepta `data` (calldata hex) — tú construyes el calldata con ethers.js ABI encoding inline y se lo pasas al signer.
+The signer MCP accepts `data` (calldata hex) — you build the calldata with ethers.js ABI encoding inline and pass it to the signer.
 
 ## Pre-flight Checks
 
@@ -26,15 +26,15 @@ El signer MCP acepta `data` (calldata hex) — tú construyes el calldata con et
 
 ## Building Calldata
 
-Para Uniswap V3 `exactInputSingle`, construye el calldata con ABI encoding.
+For Uniswap V3 `exactInputSingle`, build the calldata with ABI encoding.
 
-**Parámetros del swap:**
+**Swap parameters:**
 - Router: `0x2626664c2603336E57B271c5C0b26F421741e481` (Uniswap V3 SwapRouter02)
 - Function: `exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))`
 - Fee tiers: 500 (0.05% — stablecoins/majors), 3000 (0.3%), 10000 (1%)
-- Para USDC/WETH usar fee `500` (pool más líquido en Base)
-- amountOutMinimum: precio actual * (1 - slippage). Max slippage: 1%
-- sqrtPriceLimitX96: `0` (sin límite)
+- For USDC/WETH use fee `500` (most liquid pool on Base)
+- amountOutMinimum: current price * (1 - slippage). Max slippage: 1%
+- sqrtPriceLimitX96: `0` (no limit)
 
 **Token addresses (Base):**
 - USDC: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` (6 decimals)
@@ -42,9 +42,9 @@ Para Uniswap V3 `exactInputSingle`, construye el calldata con ABI encoding.
 - DAI: `0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb` (18 decimals)
 - cbETH: `0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22` (18 decimals)
 
-## Execution Flow (usando MCP tools)
+## Execution Flow (using MCP tools)
 
-### Paso 1: Approve (si es ERC20 → Router)
+### Step 1: Approve (if ERC20 → Router)
 ```
 signer.sign_and_send(
   to: "<token_address>",
@@ -55,9 +55,9 @@ signer.sign_and_send(
   description: "Approve <amount> <token> for Uniswap V3 Router"
 )
 ```
-- Approval amount: **exacto** (nunca infinite approval — está bloqueado por policy)
+- Approval amount: **exact** (never infinite approval — blocked by policy)
 
-### Paso 2: Swap
+### Step 2: Swap
 ```
 signer.sign_and_send(
   to: "0x2626664c2603336E57B271c5C0b26F421741e481",
@@ -69,14 +69,14 @@ signer.sign_and_send(
 )
 ```
 
-### Paso 3: Verificar resultado
-- `blockchain.get_balance` para confirmar tokens recibidos
-- Reportar al Overseer: amount in, amount out, effective price, tx hash, explorer link
+### Step 3: Verify result
+- `blockchain.get_balance` to confirm tokens received
+- Report to Overseer: amount in, amount out, effective price, tx hash, explorer link
 
 ## Safety
 
 - Max slippage: 1% (from policy.json)
-- NUNCA swapear más de $10 sin owner approval (policy.json: per_transaction_usd)
-- SIEMPRE check_policy antes de sign_and_send
-- Si el swap causaría >50% concentración en un token → alert owner
-- Después de cada swap exitoso → ejecutar skill `post-trade-review`
+- NEVER swap more than $10 without owner approval (policy.json: per_transaction_usd)
+- ALWAYS check_policy before sign_and_send
+- If the swap would cause >50% concentration in a single token → alert owner
+- After each successful swap → run skill `post-trade-review`
