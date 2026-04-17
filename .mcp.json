@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "blockchain": {
+      "command": "bun",
+      "args": [
+        "run",
+        "mcp-servers/blockchain/index.ts"
+      ],
+      "cwd": "."
+    },
+    "prices": {
+      "command": "bun",
+      "args": [
+        "run",
+        "mcp-servers/prices/index.ts"
+      ],
+      "cwd": "."
+    },
+    "signer": {
+      "command": "bun",
+      "args": [
+        "run",
+        "mcp-servers/signer/index.ts"
+      ],
+      "cwd": ".",
+      "env": {
+        "SIGNER_PASSWORD": "${SIGNER_PASSWORD}"
+      }
+    },
+    "polymarket": {
+      "command": "bun",
+      "args": [
+        "run",
+        "mcp-servers/polymarket/index.ts"
+      ],
+      "cwd": ".",
+      "env": {
+        "SIGNER_PASSWORD": "${SIGNER_PASSWORD}",
+        "POLYMARKET_API_KEY": "${POLYMARKET_API_KEY}",
+        "POLYMARKET_API_SECRET": "${POLYMARKET_API_SECRET}",
+        "POLYMARKET_PASSPHRASE": "${POLYMARKET_PASSPHRASE}"
+      }
+    }
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-03-28",
+  "note": "Limits conservadores. Consultar balance actual v\u00eda blockchain-mcp antes de operar.",
+  "spending_limits": {
+    "per_transaction_usd": 40,
+    "daily_usd": 100,
+    "weekly_usd": 150,
+    "monthly_usd": 150
+  },
+  "approval_required": {
+    "transaction_above_usd": 10,
+    "new_protocol": true,
+    "bridge_operations": true,
+    "token_not_in_allowlist": true,
+    "allowance_above_usd": 20
+  },
+  "allowed_protocols": [
+    {
+      "name": "Uniswap V3",
+      "address": "0x2626664c2603336E57B271c5C0b26F421741e481",
+      "operations": [
+        "swap"
+      ]
+    },
+    {
+      "name": "Aerodrome",
+      "address": "0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43",
+      "operations": [
+        "swap",
+        "add_liquidity",
+        "remove_liquidity"
+      ]
+    },
+    {
+      "name": "Aave V3",
+      "address": "0xA238Dd80C259a72e81d7e4664a9801593F98d1c5",
+      "operations": [
+        "supply",
+        "withdraw"
+      ]
+    },
+    {
+      "name": "Compound V3",
+      "address": "0xb125E6687d4313864e53df431d5425969c15Eb2F",
+      "operations": [
+        "supply",
+        "withdraw"
+      ]
+    },
+    {
+      "name": "gTrade (Gains Network)",
+      "type": "perpetuals",
+      "address": "0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "open_trade",
+        "close_trade",
+        "update_sl",
+        "update_tp",
+        "approve"
+      ],
+      "notes": "Perpetual futures on Base. Forex, crypto, commodities, stocks. Collateral: USDC. Diamond proxy contract."
+    },
+    {
+      "name": "Polymarket",
+      "type": "prediction_market",
+      "address": null,
+      "chain": "polygon",
+      "chain_id": 137,
+      "clob_url": "https://clob.polymarket.com",
+      "operations": [
+        "list_markets",
+        "get_prices",
+        "get_order_book",
+        "search_markets",
+        "place_order",
+        "cancel_order",
+        "get_orders",
+        "get_positions"
+      ],
+      "phase": 2,
+      "notes": "Fase 2: trading habilitado. L\u00edmites en prediction_market_limits."
+    },
+    {
+      "name": "USDC (Base)",
+      "type": "token",
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "WETH (Base)",
+      "type": "token",
+      "address": "0x4200000000000000000000000000000000000006",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer",
+        "deposit",
+        "withdraw"
+      ]
+    },
+    {
+      "name": "DAI (Base)",
+      "type": "token",
+      "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "cbETH (Base)",
+      "type": "token",
+      "address": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "AERO (Base)",
+      "type": "token",
+      "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "cbBTC (Base)",
+      "type": "token",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "VIRTUAL (Base)",
+      "type": "token",
+      "address": "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "DEGEN (Base)",
+      "type": "token",
+      "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+      "chain": "base",
+      "chain_id": 8453,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    },
+    {
+      "name": "USDC (Polygon native)",
+      "type": "token",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "chain": "polygon",
+      "chain_id": 137,
+      "operations": [
+        "approve",
+        "transfer"
+      ]
+    }
+  ],
+  "allowed_tokens": [
+    "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "0x4200000000000000000000000000000000000006",
+    "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+    "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+    "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+    "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+    "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+    "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b"
+  ],
+  "allowed_tokens_notes": {
+    "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf": "cbBTC — approved by owner",
+    "0x940181a94A35A4569E4529A3CDfB74e38FD98631": "AERO — approved by owner",
+    "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed": "DEGEN — memecoin, approved by owner, VERIFY ADDRESS BEFORE TRADING",
+    "0x532f27101965dd16442E59d40670FaF5eBB142E4": "BRETT — memecoin, approved by owner, VERIFY ADDRESS BEFORE TRADING",
+    "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4": "TOSHI — memecoin, approved by owner, VERIFY ADDRESS BEFORE TRADING",
+    "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b": "VIRTUAL — AI agent protocol, approved by owner"
+  },
+  "blocked_operations": [
+    "borrow",
+    "nft_purchase",
+    "infinite_approval"
+  ],
+  "risk_parameters": {
+    "max_slippage_percent": 1.0,
+    "min_liquidity_usd": 100000,
+    "max_portfolio_concentration_percent": 50,
+    "require_protocol_audit": true
+  },
+  "strategy_allocations": {
+    "yield_farming": {
+      "target_pct": 0,
+      "max_pct": 10,
+      "note": "Desactivado por owner — prefiere trading activo"
+    },
+    "trading": {
+      "target_pct": 60,
+      "max_pct": 80,
+      "note": "Incluye ETH, BTC, AERO, VIRTUAL, memecoins"
+    },
+    "arbitrage": {
+      "target_pct": 5,
+      "max_pct": 15
+    },
+    "airdrop_farming": {
+      "target_pct": 5,
+      "max_pct": 10
+    },
+    "staking": {
+      "target_pct": 0,
+      "max_pct": 10,
+      "note": "Desactivado por owner"
+    },
+    "reserve_usdc": {
+      "target_pct": 10,
+      "min_pct": 5
+    },
+    "prediction_markets": {
+      "target_pct": 0,
+      "max_pct": 10
+    },
+    "perpetuals": {
+      "target_pct": 20,
+      "max_pct": 35,
+      "note": "gTrade perpetuals: forex, commodities, stocks, crypto. Agregado 2026-04-14."
+    }
+  },
+  "adaptive_rules": {
+    "trading_pause_win_rate": 0.3,
+    "trading_pause_min_trades": 20,
+    "trading_raise_threshold_win_rate": 0.4,
+    "trading_raise_threshold_min_trades": 10,
+    "arbitrage_raise_spread_loss_rate": 0.3,
+    "strategy_pause_cumulative_loss_usd": 10,
+    "portfolio_pause_all_drawdown_pct": 15
+  },
+  "aggressive_rules": {
+    "enabled": true,
+    "enabled_at": "2026-03-30",
+    "approved_by": "owner",
+    "confluence_threshold": 2,
+    "oversold_auto_buy": {
+      "enabled": true,
+      "rsi_threshold": 30,
+      "position_size_usd": 5,
+      "stop_loss_pct": 5,
+      "note": "Compra automática cuando RSI < 30. Approved by owner."
+    },
+    "revert_to_conservative_if": {
+      "win_rate_below": 0.4,
+      "after_n_trades": 10,
+      "note": "Si win rate < 40% después de 10 trades, volver a confluencia 3/5"
+    }
+  },
+  "prediction_market_limits": {
+    "max_per_position_usd": 5,
+    "max_total_exposure_usd": 20,
+    "max_concurrent_positions": 4,
+    "min_edge_percent": 5,
+    "min_liquidity_usd": 1000,
+    "allowed_categories": [
+      "crypto",
+      "tech",
+      "politics",
+      "geopolitics",
+      "sports",
+      "weather",
+      "entertainment",
+      "economics"
+    ],
+    "category_notes": "Ampliado por owner (2026-03-31). Todas las categorías permitidas.",
+    "require_approval": true,
+    "sizing_method": "half_kelly"
+  },
+  "perpetual_limits": {
+    "max_per_position_usd": 5,
+    "max_total_exposure_usd": 20,
+    "max_concurrent_positions": 4,
+    "max_leverage_crypto": 10,
+    "max_leverage_forex": 25,
+    "max_leverage_commodities": 10,
+    "max_leverage_stocks": 5,
+    "require_stop_loss": true,
+    "max_sl_distance_pct": 5,
+    "allowed_groups": ["crypto", "forex", "commodities", "stocks", "indices"],
+    "require_approval": true,
+    "protocol": "gTrade",
+    "diamond_address": "0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb",
+    "collateral": "USDC",
+    "collateral_index": 1,
+    "notes": "Perpetuals en Base via gTrade. SIEMPRE usar stop loss. Leverage conservador para empezar — se puede subir con aprobación."
+  },
+  "bridge_operations": {
+    "enabled": false,
+    "allowed_bridges": [
+      "across"
+    ],
+    "allowed_routes": [
+      {
+        "from": "base",
+        "to": "polygon",
+        "token": "USDC"
+      },
+      {
+        "from": "polygon",
+        "to": "base",
+        "token": "USDC"
+      }
+    ],
+    "max_bridge_amount_usd": 25,
+    "require_approval": true,
+    "notes": "Bridge deshabilitado por defecto. Habilitar manualmente cuando sea necesario."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "network": {
+    "name": "Base",
+    "chain_id": 8453,
+    "rpc_url": "https://mainnet.base.org",
+    "rpc_url_fallback": "https://base.llamarpc.com",
+    "ws_url": "wss://base.publicnode.com",
+    "explorer": "https://basescan.org",
+    "explorer_api": "https://api.basescan.org/api"
+  },
+  "wallet": {
+    "address": "<YOUR_WALLET_ADDRESS>",
+    "keystore_path": "../keystore/wallet.key.enc"
+  },
+  "tokens": {
+    "ETH": {
+      "address": "native",
+      "decimals": 18,
+      "coingecko_id": "ethereum"
+    },
+    "WETH": {
+      "address": "0x4200000000000000000000000000000000000006",
+      "decimals": 18,
+      "coingecko_id": "weth"
+    },
+    "USDC": {
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "decimals": 6,
+      "coingecko_id": "usd-coin"
+    },
+    "DAI": {
+      "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      "decimals": 18,
+      "coingecko_id": "dai"
+    },
+    "cbETH": {
+      "address": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      "decimals": 18,
+      "coingecko_id": "coinbase-wrapped-staked-eth"
+    }
+  },
+  "protocols": {
+    "uniswap_v3": {
+      "router": "0x2626664c2603336E57B271c5C0b26F421741e481",
+      "quoter": "0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a",
+      "factory": "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
+    },
+    "aerodrome": {
+      "router": "0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43"
+    },
+    "aave_v3": {
+      "pool": "0xA238Dd80C259a72e81d7e4664a9801593F98d1c5",
+      "pool_data_provider": "0x2d8A3C5677189723C4cB8873CfC9C8976FDF38Ac"
+    },
+    "gtrade": {
+      "diamond": "0x6cD5aC19a07518A8092eEFfDA4f1174C72704eeb",
+      "backend_api": "https://backend-base.gains.trade",
+      "collateral": "USDC",
+      "collateral_index": 1,
+      "note": "Perpetual futures — forex, crypto, commodities, stocks on Base"
+    }
+  }
+}

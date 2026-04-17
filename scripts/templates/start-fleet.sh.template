@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+set -e
+
+REPO_DIR="$HOME/Documents/personal-repositories/money-agents"
+cd "$REPO_DIR"
+
+echo "🚀 Starting Money Agents Fleet..."
+echo ""
+
+# Pedir password del signer
+read -s "SIGNER_PASSWORD?🔑 Signer password: "
+echo ""
+export SIGNER_PASSWORD
+export TELEGRAM_BOT_TOKEN="<TU_TOKEN_DE_BOTFATHER>"
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+
+# SIGKILL (-9) para evitar zombie de Telegram que causa 409 Conflict
+# (zombie muestra "typing" pero no puede entregar mensajes a Claude)
+pkill -9 -f "plugin:telegram@claude-plugins-official" 2>/dev/null || true
+pkill -9 -f "external_plugins/telegram" 2>/dev/null || true
+sleep 3
+
+# Cargar nvm y usar Node 22
+source "$NVM_DIR/nvm.sh" && nvm use 22 --silent
+
+echo "📡 Starting Claude Code with Agent Team..."
+echo ""
+
+INIT_PROMPT=$(cat "$REPO_DIR/scripts/init-prompt.txt")
+
+claude --model claude-opus-4-6 --channels plugin:telegram@claude-plugins-official -- "$INIT_PROMPT"
