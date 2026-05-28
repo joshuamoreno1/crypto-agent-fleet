@@ -190,7 +190,27 @@ crypto-agent-fleet/
 │   └── wallet.key.enc            # Your encrypted private key (AES-256)
 └── scripts/
     ├── start-fleet.sh             # Start the fleet (edit with your bot token)
-    └── init-prompt.txt            # Initial prompt that boots the Agent Team
+    ├── init-prompt.txt            # Initial prompt that boots the Agent Team
+    ├── heartbeat.sh               # Periodic Telegram prompt to the Overseer
+    ├── heartbeat.plist            # macOS launchd job for the heartbeat
+    ├── install-heartbeat.sh       # Install the heartbeat as a launchd job
+    └── uninstall-heartbeat.sh     # Remove the heartbeat launchd job
+```
+
+### Optional: Heartbeat (recommended)
+
+`scripts/heartbeat.sh` pings the Overseer through your Telegram bot every 30 minutes, so the fleet keeps scanning and reporting even when you're not actively chatting with it. Different prompts fire at morning briefing (08:00), daily close (20:00), Sunday weekly review (10:00), and a quick check at all other times.
+
+Setup on macOS:
+
+```bash
+# 1. Edit scripts/heartbeat.sh — paste your TELEGRAM_BOT_TOKEN and CHAT_ID
+# 2. Copy the plist and edit it (replace <ABSOLUTE_PATH_TO_REPO> and <YOUR_HOME>):
+cp scripts/heartbeat.plist ~/Library/LaunchAgents/com.crypto-agent-fleet.heartbeat.plist
+# 3. Install:
+./scripts/install-heartbeat.sh
+# Logs: tail -f /tmp/crypto-agent-fleet-heartbeat.log
+# Uninstall: ./scripts/uninstall-heartbeat.sh
 ```
 
 ## Customizing

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd plist for the Crypto Agent Fleet heartbeat (macOS).
+
+  Before installing:
+    1. Replace <ABSOLUTE_PATH_TO_REPO> with the full path to your clone of crypto-agent-fleet
+       (e.g. /Users/yourname/Documents/crypto-agent-fleet).
+    2. Replace <YOUR_HOME> with your home directory (e.g. /Users/yourname).
+
+  Then copy this file to:
+    ~/Library/LaunchAgents/com.crypto-agent-fleet.heartbeat.plist
+  and run scripts/install-heartbeat.sh.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.crypto-agent-fleet.heartbeat</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string><ABSOLUTE_PATH_TO_REPO>/scripts/heartbeat.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>1800</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/crypto-agent-fleet-heartbeat.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/crypto-agent-fleet-heartbeat.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string><YOUR_HOME></string>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
