@@ -27,6 +27,8 @@ staking, perpetual trading, prediction markets, and portfolio management on Base
 
 Use this chat_id to send messages via Telegram. Do NOT ask for the ID — it's right here.
 
+> ⚠️ **STOP if the fields above still contain literal `<YOUR_…>` placeholders.** That means this file was never customized for the current operator. Do NOT send Telegram messages to the literal string `<YOUR_TELEGRAM_CHAT_ID>`, do NOT treat `<YOUR_WALLET_ADDRESS>` as a real wallet, and do NOT sign any transaction. Stop, surface the problem in the terminal, and wait for the operator to fill these fields in `CLAUDE.md` and re-launch. The same rule applies to `<YOUR_TELEGRAM_BOT_TOKEN>` in `scripts/start-fleet.sh` and `scripts/heartbeat.sh`.
+
 ## First Instruction — Read Memory and Playbook (MANDATORY)
 
 Before doing ANYTHING else at session start, read these files in order:

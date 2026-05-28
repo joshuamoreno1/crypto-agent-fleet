@@ -4,6 +4,18 @@ A fleet of AI agents that manage a crypto portfolio autonomously on **Base** (Et
 
 Think of it as hiring a team of AI employees for your wallet: one analyzes markets, one manages risk, and one executes trades — all coordinated by a lead agent that reports to you via Telegram.
 
+> ## ⚠️ Experimental — Read Before Running
+>
+> This software signs real on-chain transactions with your real private key. **You can lose all the funds in the wallet.** Bugs, model errors, oracle failures, MEV, geo-blocks, hot wallet compromise, smart-contract exploits in the protocols listed below — any of these can wipe the wallet.
+>
+> - **Not financial advice.** Nothing here is a recommendation to trade, invest, or use any specific protocol.
+> - **Not audited.** The MCP servers, policy engine, and signing logic are reference code, not production-grade security software.
+> - **Start tiny.** Fund the wallet with an amount you can afford to lose entirely (≤ $50 USDC). Treat any positive return as a bonus.
+> - **You are the human-in-the-loop.** The policy engine raises trades over $10 to you for approval — if you reflexively approve everything via Telegram, you are the bug.
+> - **Your jurisdiction's rules apply.** Perpetuals (gTrade) and prediction markets (Polymarket) are restricted or illegal in some countries.
+>
+> By running this software you accept full responsibility for any losses. See [`LICENSE`](LICENSE) — provided AS-IS, no warranty.
+
 ## What Does It Do?
 
 The fleet runs 7 strategies automatically:
@@ -50,13 +62,28 @@ Every trade goes through a **policy engine** that enforces spending limits, prot
 
 ## Prerequisites
 
-- **macOS** (Apple Silicon recommended)
+- **macOS** (Apple Silicon recommended; the optional heartbeat uses launchd and is macOS-only — the fleet itself runs anywhere Bun + Claude Code do)
 - **[Bun](https://bun.sh/)** v1.3+ — JavaScript runtime
 - **[Claude Code](https://claude.ai/code)** v2.1.32+ with a Claude Max subscription
 - **A crypto wallet** (MetaMask or similar) funded with:
   - **USDC** on Base — trading capital (start with as little as $50)
   - **ETH** on Base — for gas fees (~$0.001 per tx, so $1 is plenty)
 - **A Telegram bot** — free, takes 2 minutes to create
+
+## Costs
+
+What you actually pay:
+
+| Cost | Approx. | Notes |
+|---|---|---|
+| Claude Max subscription | $100–$200 / month | Required — the fleet runs on your Claude account |
+| Wallet seed capital | ≥ $50 USDC on Base | Start tiny. Money you can afford to lose |
+| Gas on Base | ~$0.001 per swap / lending tx | $1 of ETH lasts thousands of operations |
+| Bridge USDC → Polygon (optional, for Polymarket) | ~$0.50 | One-time via [across.to](https://across.to) |
+| Gas on Polygon (optional) | ~$0.10 in POL | One-time top-up |
+| Telegram bot | Free | — |
+
+So the practical entry cost is **a Claude Max plan plus $50–$100 of crypto**. Everything else is rounding error.
 
 ## Setup Guide
 
@@ -130,7 +157,29 @@ Skip this if you don't want prediction market trading.
 
 It will ask for your keystore password, start Claude Code with the Telegram channel, create the Agent Team, run an initial portfolio scan, and start reporting to you via Telegram.
 
-### 6. Talk to Your Fleet
+**What success looks like:**
+1. Terminal prints `🚀 Starting Crypto Agent Fleet...` and then a Claude Code session header.
+2. Within ~30 seconds, your Telegram bot sends a message like `🎯 Overseer online. Wallet 0x… has $… USDC on Base and $… on Polygon.`
+3. The agents read `data/memory/`, then send a "first scan" summary covering balances, current yields, and any pending signals.
+
+If nothing arrives in Telegram after a minute, see **Troubleshooting** below.
+
+### 6. Install the Heartbeat (recommended, macOS)
+
+`scripts/heartbeat.sh` pings the Overseer through your Telegram bot every 30 minutes so the fleet keeps scanning even when you're not actively chatting. Different prompts fire at morning briefing (08:00), daily close (20:00), Sunday weekly review (10:00), and a quick check at all other times.
+
+```bash
+# Edit scripts/heartbeat.sh — paste your TELEGRAM_BOT_TOKEN and CHAT_ID
+# Copy the plist and edit it (replace <ABSOLUTE_PATH_TO_REPO> and <YOUR_HOME>):
+cp scripts/heartbeat.plist ~/Library/LaunchAgents/com.crypto-agent-fleet.heartbeat.plist
+./scripts/install-heartbeat.sh
+# Logs:      tail -f /tmp/crypto-agent-fleet-heartbeat.log
+# Uninstall: ./scripts/uninstall-heartbeat.sh
+```
+
+On non-macOS systems you can recreate this with `cron`, `systemd --user`, or any scheduler — the script itself is a plain shell + `curl` POST to the Telegram Bot API.
+
+### 7. Talk to Your Fleet
 
 Send messages to your Telegram bot:
 
@@ -143,6 +192,18 @@ Send messages to your Telegram bot:
 | "Open a long on EUR/USD" | gTrade perpetual with stop loss (requires approval) |
 | "Scan Polymarket for crypto bets" | Prediction market edge analysis |
 | "How's my P&L today?" | Daily profit/loss breakdown by strategy |
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Telegram bot shows "typing…" forever, never replies | Stale `telegram` plugin process from a previous run holding the long-poll connection (Telegram returns 409 Conflict to the new one) | `start-fleet.sh` already runs `pkill -9 -f "plugin:telegram"` before launching — if it still happens, run those `pkill` lines manually, wait 3 s, retry |
+| `Could not decrypt keystore. Wrong password?` | Typo'd the keystore password, or the encrypted file was created with different OpenSSL defaults | Re-export the private key and re-run the `openssl enc` step from §2 |
+| Trader replies "policy violation: target address … not in allowed protocols list" | The destination contract isn't in `config/policy.json` → `allowed_protocols` | Either it's a legit new protocol (add it via Telegram approval flow and update the file), or it's a hallucinated/wrong address — investigate before allowlisting |
+| Polymarket tools return `403` or `geo-restricted` | Polymarket geo-blocks several regions | Run [Cloudflare WARP](https://1.1.1.1/) (free) or another VPN, then restart the fleet |
+| `SIGNER_PASSWORD is not set` from `gen-creds.ts` | You ran the Polymarket creds generator without exporting the keystore password in this shell | `read -s "SIGNER_PASSWORD?Password: " && export SIGNER_PASSWORD` first |
+| Heartbeat installed but no messages | `BOT_TOKEN` / `CHAT_ID` not filled in `scripts/heartbeat.sh`, or the plist still has `<ABSOLUTE_PATH_TO_REPO>` placeholders | Check `tail -f /tmp/crypto-agent-fleet-heartbeat.log` and re-edit |
+| Overseer keeps saying "I need owner approval" for everything | Working as designed — every trade > $10 and every new protocol needs your Telegram OK. Resist the urge to auto-approve everything | Tune limits in `config/policy.json` if (and only if) you've thought through the risk |
 
 ## Project Structure
 
@@ -195,22 +256,6 @@ crypto-agent-fleet/
     ├── heartbeat.plist            # macOS launchd job for the heartbeat
     ├── install-heartbeat.sh       # Install the heartbeat as a launchd job
     └── uninstall-heartbeat.sh     # Remove the heartbeat launchd job
-```
-
-### Optional: Heartbeat (recommended)
-
-`scripts/heartbeat.sh` pings the Overseer through your Telegram bot every 30 minutes, so the fleet keeps scanning and reporting even when you're not actively chatting with it. Different prompts fire at morning briefing (08:00), daily close (20:00), Sunday weekly review (10:00), and a quick check at all other times.
-
-Setup on macOS:
-
-```bash
-# 1. Edit scripts/heartbeat.sh — paste your TELEGRAM_BOT_TOKEN and CHAT_ID
-# 2. Copy the plist and edit it (replace <ABSOLUTE_PATH_TO_REPO> and <YOUR_HOME>):
-cp scripts/heartbeat.plist ~/Library/LaunchAgents/com.crypto-agent-fleet.heartbeat.plist
-# 3. Install:
-./scripts/install-heartbeat.sh
-# Logs: tail -f /tmp/crypto-agent-fleet-heartbeat.log
-# Uninstall: ./scripts/uninstall-heartbeat.sh
 ```
 
 ## Customizing
